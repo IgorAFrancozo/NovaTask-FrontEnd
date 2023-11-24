@@ -13,13 +13,13 @@ class Task {
     this.tempoDecorrido,
   });
 
-  factory Task.fromMap(Map taskMap) {
+  factory Task.fromMap(Map<String, dynamic> taskMap) {
     return Task(
-      id: taskMap['id'],
-      title: taskMap['titulo'],
-      done: taskMap['feito'],
-      tempoDecorrido: taskMap['tempo_decorrido'],
-      dataCadastro: taskMap['data_cadastro'],
+      id: taskMap['id'] as int,
+      title: taskMap['titulo'] as String,
+      done: taskMap['feito'] as bool,
+      tempoDecorrido: taskMap['tempoDecorrido'] as String?, // Use String? se pode ser nulo
+      dataCadastro: taskMap['dataCadastro'] as String,
     );
   }
 

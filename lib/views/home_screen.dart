@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             );
           } else {
             List<Task> tasks = snapshot.data!;
-            Provider.of<TasksData>(context, listen: false).tasks = tasks;
+            Provider.of<TasksData>(context, listen: false).tasks = tasks ?? [];
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                     itemCount: tasksData.tasks.length,
                     itemBuilder: (context, index) {
                       Task task = tasksData.tasks[index];
-                      return TaskTile(
+                      return TaskTitle(
                         task: task,
                         tasksData: tasksData,
                       );

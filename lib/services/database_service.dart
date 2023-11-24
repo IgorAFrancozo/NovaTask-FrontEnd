@@ -26,10 +26,14 @@ class DatabaseServices {
       body: body,
     );
     print(response.body);
-    Map responseMap = jsonDecode(response.body);
-    Task task = Task.fromMap(responseMap);
-
-    return task;
+    Map<String, dynamic> responseMap = jsonDecode(response.body);
+    if (responseMap is Map<String, dynamic>) {
+      Task task = Task.fromMap(responseMap);
+      return task;
+    } else {
+      // Trate a situação em que o mapa não é do tipo esperado.
+      throw Exception('Resposta do servidor não está no formato esperado.');
+    }
   }
 
   static Future<List<Task>> getTasks() async {
@@ -39,13 +43,18 @@ class DatabaseServices {
       headers: headers,
     );
     print(response.body);
-    List responseList = jsonDecode(response.body);
-    List<Task> tasks = [];
-    for (Map taskMap in responseList) {
-      Task task = Task.fromMap(taskMap);
-      tasks.add(task);
+    List<dynamic> responseList = jsonDecode(response.body);
+    if (responseList is List<dynamic>) {
+      List<Task> tasks = [];
+      for (Map<String, dynamic> taskMap in responseList) {
+        Task task = Task.fromMap(taskMap);
+        tasks.add(task);
+      }
+      return tasks;
+    } else {
+      // Trate a situação em que a lista não é do tipo esperado.
+      throw Exception('Resposta do servidor não está no formato esperado.');
     }
-    return tasks;
   }
 
   static Future<http.Response> updateTask(int id) async {

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'models/tarefa_data.dart';
 import 'models/task.dart';
 
-class TaskTile extends StatelessWidget {
+class TaskTitle extends StatelessWidget {
   final Task task;
   final TasksData tasksData;
 
-  const TaskTile({Key? key, required this.task, required this.tasksData})
+  const TaskTitle({Key? key, required this.task, required this.tasksData})
       : super(key: key);
 
   @override
@@ -31,9 +31,16 @@ class TaskTile extends StatelessWidget {
                 task.done ? TextDecoration.lineThrough : TextDecoration.none,
               ),
             ),
-            if (task.done)
+            if (task.done && task.tempoDecorrido != null) // Verifica se é diferente de null
               Text(
                 'Tempo Decorrido: ${task.tempoDecorrido}',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            if (task.done && task.tempoDecorrido == null)
+              Text(
+                'Tempo Decorrido: Não disponível',
                 style: TextStyle(
                   fontStyle: FontStyle.italic,
                 ),
